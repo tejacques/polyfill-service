@@ -3,7 +3,8 @@ var fs = require('fs'),
 	useragent = require('useragent'),
 	uglify    = require('uglify-js'),
 	AliasResolver = require('./aliases'),
-	lookupAgent = require('./agent');
+	lookupAgent = require('./agent'),
+	getCanIUseBrowserVersions  = require('./caniusefeatures');
 
 // Load additional useragent features: primarily to use: agent.satisfies to
 // test a browser version against a semver string
@@ -28,6 +29,11 @@ fs.readdirSync(polyfillSourceFolder).forEach(function (polyfillName) {
 	var config = require(configPath),
 		polyfillSourcePath = path.join(polyfillPath, 'polyfill.js'),
 		fileContents = fs.readFileSync(polyfillSourcePath, 'utf8');
+
+
+	if (config.caniuse) {
+		config.browsers = getCanIUseBrowserVersions(config.caniuse);
+	}
 
 	// Read each file and store in a map for quick lookup
 	sources[polyfillName] = {
@@ -68,6 +74,10 @@ function getPolyfillString(options) {
 		ua.patch = '0';
 	}
 
+	if (ua.minor == "00") {
+		ua.minor = "0";
+	}
+
 	var expandedPolyfillList = aliasResolver.resolve(options.polyfills),
 		includePolyfills = expandedPolyfillList.forEach(function(polyfill) {
 		var polyfillSource = sources[polyfill.name];
@@ -81,11 +91,18 @@ function getPolyfillString(options) {
 			var polyfillConfig = polyfillSource.config,
 				browsersConfigured = polyfillConfig && polyfillConfig.browsers;
 
+			console.log(browsersConfigured);
+
 			if (!(browsersConfigured)) {
 				return;
 			}
 
 			var browserVersion = polyfillConfig.browsers[uaFamily];
+
+			if (Array.isArray(browserVersion))  {
+				browserVersion = browserVersion.join(" || ");
+			}
+
 			if (!(browserVersion && ua.satisfies(browserVersion))) {
 				return;
 			}

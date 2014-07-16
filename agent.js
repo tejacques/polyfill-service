@@ -7,9 +7,13 @@
 var agentlist = {
 	"chromium": "chrome",
 	"mobile safari": "safari ios",
-	"firefox beta": "firefox"
+	"ios_saf": "safari ios",
+	"firefox beta": "firefox",
+	"op_mini": "opera mini",
+	"op_mob": "opera mobile",
+	"bb": "blackberry",
+	"blackberry webkit": "blackberry"
 };
-
 
 /**
  * Return a normalized name for the user agent, if there is no normalized name

@@ -3,5 +3,6 @@
 		"ie": "6 - 8",
 		"opera": "15",
 		"safari": "4"
-	}
+	},
+	"caniuse": "geolocation"
 }
