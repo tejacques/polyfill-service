@@ -2,9 +2,11 @@ var el;
 
 beforeEach(function(){
 	el = document.createElement('div');
+	document.body.appendChild(el);
 });
 
 afterEach(function(){
+	document.body.removeChild(el);
 	el = null;
 });
 
