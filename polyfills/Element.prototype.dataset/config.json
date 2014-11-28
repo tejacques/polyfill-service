@@ -6,7 +6,6 @@
 		"ie": "9 - 10"
 	},
 	"dependencies": [
-		"Object.defineProperty",
-		"Element"
+		"Object.defineProperty"
 	]
 }
