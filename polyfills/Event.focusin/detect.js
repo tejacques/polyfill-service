@@ -1,19 +1,18 @@
 (function(support, html, a) {
 	function onfocusin() {
+		console.log('focusin fired in feature detect');
+		a.removeEventListener('focusin', onfocusin);
 		support = true;
 	}
+	console.log('Running feature detect', html, a);
 
-	a.href = '#';
-
-	if ('addEventListener' in a) {
+	if (html) {
+		a.href = '#';
 		a.addEventListener('focusin', onfocusin);
-	} else {
-		a.attachEvent('onfocusin', onfocusin);
+		html.appendChild(a).focus();
+		html.removeChild(a);
 	}
 
-	html.appendChild(a).focus();
-
-	html.removeChild(a);
-
+	console.log('Returning feature support:', support);
 	return support;
-})(false, document.documentElement, document.createElement('a'))
+})(false, document.body, document.createElement('a'))
