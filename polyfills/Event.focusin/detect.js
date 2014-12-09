@@ -4,10 +4,10 @@
 		a.removeEventListener('focusin', onfocusin);
 		support = true;
 	}
-	console.log('Running feature detect', html, a);
 
 	if (html) {
 		a.href = '#';
+		console.log('Running feature detect with', html, a);
 		a.addEventListener('focusin', onfocusin);
 		html.appendChild(a).focus();
 		html.removeChild(a);
@@ -15,4 +15,4 @@
 
 	console.log('Returning feature support:', support);
 	return support;
-})(false, document.body, document.createElement('a'))
+})(false, document.documentElement, document.createElement('a'))

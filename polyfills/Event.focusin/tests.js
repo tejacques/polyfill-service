@@ -3,16 +3,18 @@ it('should dispatch the focusin event', function(done) {
 	var testEl = document.createElement('input');
 	testEl.id = 'test1';
 	document.body.appendChild(testEl);
-	window.addEventListener('focusin', listener);
-	testEl.focus();
+	setTimeout(function() {
+		window.addEventListener('focusin', listener);
+		testEl.focus();
 
-	function listener(e) {
-		expect(e.type).to.be('focusin');
-		expect(e.target).to.be(testEl);
-		window.removeEventListener('focusin', listener);
-		document.body.removeChild(testEl);
-		done();
-	}
+		function listener(e) {
+			expect(e.type).to.be('focusin');
+			expect(e.target).to.be(testEl);
+			window.removeEventListener('focusin', listener);
+			document.body.removeChild(testEl);
+			done();
+		}
+	}, 50);
 });
 
 it('should dispatch the focusout event', function(done) {
