@@ -69,6 +69,24 @@
 			</tbody>
 		</table>
 
+		<h2 id='ie-compat-mode'>Compatibility mode in IE</h2>
+
+		<p>Internet Explorer has a compatibility mode (docuent mode) which allows one browser to emulate an earlier one.  For example, IE8 may emulate IE7 if it believes that the website would display better with the earlier rendering engine.  Unfortunately since the browser makes the decision about what document mode to use after it has received the markup, the user agent header is the same.  The polyfill service will therefore serve IE8-appropriate polyfills to IE8 even if it's emulating IE7.</p>
+
+		<p>If this is of concern to you, you can use conditional comments to check the IE version:</p>
+
+		<?prettify?>
+		<pre><code>&lt;!--[if IE 7 ]>&lt;script src="//cdn.polyfill.io/v1/polyfill.min.js?ua=ie/7">&lt;/script>&lt;![endif]-->
+&lt;!--[if IE 8 ]>&lt;script src="//cdn.polyfill.io/v1/polyfill.min.js?ua=ie/8">&lt;/script>&lt;![endif]-->
+&lt;!--[if IE 9 ]>&lt;script src="//cdn.polyfill.io/v1/polyfill.min.js?ua=ie/9">&lt;/script>&lt;![endif]-->
+&lt;!--[if IE 10 ]>&lt;script src="//cdn.polyfill.io/v1/polyfill.min.js?ua=ie/10">&lt;/script>&lt;![endif]-->
+&lt;!--[if IE 11 ]>&lt;script src="//cdn.polyfill.io/v1/polyfill.min.js?ua=ie/11">&lt;/script>&lt;![endif]-->
+&lt;!--[if !IE]>-->&lt;script src="//cdn.polyfill.io/v1/polyfill.min.js">&lt;/script>&lt;!--&lt;![endif]--></code></pre>
+
+		<p>However, you can also prevent IE from falling into compatibility mode by adding the following meta tag, which should be the first tag in the <code>HEAD</code> of the document:</p>
+
+		<?prettify?>
+		<pre><code>&lt;meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=1" /></code></pre>
 	</div>
 
 
